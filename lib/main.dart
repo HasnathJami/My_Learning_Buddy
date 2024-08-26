@@ -1,53 +1,86 @@
 import 'package:flutter/material.dart';
+import 'package:my_learning_buddy/drawer.dart';
+import 'package:http/http.dart' as http;
+import 'dart:convert';
 
-void main() {
-  runApp(const MaterialApp(
-    title: 'Learning Buddy',
-    home: Home(),
-  ));
+void main() => runApp(MaterialApp(
+  title: "Learning Buddy",
+  home: Home(),
+  theme: ThemeData(
+      primarySwatch:
+      Colors.purple // it changes the status bar and top bar color
+  ),
+));
+
+class Home extends StatefulWidget {
+  const Home({super.key});
+
+  @override
+  State<Home> createState() => _HomeState();
 }
 
-class Home extends StatelessWidget {
-  const Home({super.key});
+class _HomeState extends State<Home> {
+  TextEditingController _nameController = TextEditingController();
+  var myText = "Change Me";
+  var url = "https://jsonplaceholder.typicode.com/photos";
+  var data;
+
+  @override
+  void initState() {
+    super.initState();
+    getData();
+  }
+
+  getData() async {
+    var res = await http.get(url);
+    // print(res.body);
+    data = jsonDecode(res.body);
+     print(data);
+    setState(() {
+    });
+  }
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      backgroundColor: Colors.grey[200],
       appBar: AppBar(
-        title: const Text("Learning Buddy"),
+        title: Text("MLB"),
+        // backgroundColor: Colors.brown,
       ),
-      body: Center(
-        // alignment: Alignment.center,
-        child: Container(
-          alignment: Alignment.center,
-          // padding: EdgeInsets.all(8),
-          // color: Colors.teal,
-          width: 100,
-          height: 100,
-          decoration: BoxDecoration(
-              // shape: BoxShape.circle,
-              borderRadius: BorderRadius.circular(10),
-              boxShadow: [
-                BoxShadow(
-                    color: Colors.grey.shade400,
-                    blurRadius: 5,
-                    offset: const Offset(2.0, 5.0)
-                    // spreadRadius: 10,
-                    )
-              ],
-              color: Colors.teal,
-              gradient: const LinearGradient(colors: [Colors.yellow, Colors.pink])),
-          child: const Text(
-            "I am a Box tester",
-            textAlign: TextAlign.center,
-            style: TextStyle(
-              fontWeight: FontWeight.bold,
-              fontSize: 20,
-              color: Colors.white
-            ),
-          ),
+      body: Padding(
+        padding: const EdgeInsets.all(16.0),
+        child: data != null
+            ? ListView.builder(
+              // gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(crossAxisCount: 2),
+              itemBuilder: (context, index) {
+                return Padding(
+                  padding: const EdgeInsets.all(16.0),
+                  child: ListTile(
+                    title: Text(data[index]["title"]),
+                    subtitle: Text("ID: ${data[index]["id"]}"),
+                    leading: Image.network(data[index]["thumbnailUrl"]),
+                  ),
+                );
+              },
+              itemCount: data.length
+            )
+            : Center(
+          child: CircularProgressIndicator(),
         ),
       ),
+      // floatingActionButtonLocation: FloatingActionButtonLocation.centerDocked,
+      floatingActionButton: FloatingActionButton(
+        onPressed: () {
+          // myText = _nameController.text;
+          setState(() {
+            myText = _nameController.text;
+          });
+        },
+        child: Icon(Icons.refresh),
+        mini: false,
+      ),
+      drawer: MyDrawer(),
     );
   }
 }
