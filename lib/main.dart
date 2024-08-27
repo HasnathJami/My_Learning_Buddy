@@ -4,9 +4,15 @@ import 'package:flutter/material.dart';
 import 'package:http/http.dart' as http;
 import 'package:my_learning_buddy/drawer.dart';
 
+import 'login_page.dart';
+
 void main() => runApp(MaterialApp(
       title: "Learning Buddy",
-      home: Home(),
+      home: LoginPage(),
+      routes: {
+        "/login": (context) => LoginPage(),
+        "/home": (context) => Home()
+      },
       // theme: ThemeData(
       //     primarySwatch:
       //     Colors.purple // it changes the status bar and top bar color
