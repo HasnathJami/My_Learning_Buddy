@@ -1,7 +1,6 @@
-<<<<<<< HEAD
 # my_learning_buddy
 
-A Simple Flutter project.
+A Flutter(Android/iOS)  Learning App.
 
 ## Getting Started
 
@@ -14,8 +13,4 @@ A few resources to get you started if this is your first Flutter project:
 
 For help getting started with Flutter development, view the
 [online documentation](https://docs.flutter.dev/), which offers tutorials,
-samples, guidance on mobile development, and a full API reference.
-=======
-# My_Learning_Buddy
-A Simple Flutter Project
->>>>>>> 667c4fffc84fa7c18d6c9868aea1f3fea699c178
+samples, guidance on mobile development, and a full API reference
