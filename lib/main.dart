@@ -6,10 +6,10 @@ import 'dart:convert';
 void main() => runApp(MaterialApp(
   title: "Learning Buddy",
   home: Home(),
-  theme: ThemeData(
-      primarySwatch:
-      Colors.purple // it changes the status bar and top bar color
-  ),
+  // theme: ThemeData(
+  //     primarySwatch:
+  //     Colors.purple // it changes the status bar and top bar color
+  // ),
 ));
 
 class Home extends StatefulWidget {
@@ -32,7 +32,7 @@ class _HomeState extends State<Home> {
   }
 
   getData() async {
-    var res = await http.get(url);
+    var res = await http.get(Uri.parse(url));
     // print(res.body);
     data = jsonDecode(res.body);
      print(data);
@@ -45,8 +45,8 @@ class _HomeState extends State<Home> {
     return Scaffold(
       backgroundColor: Colors.grey[200],
       appBar: AppBar(
-        title: Text("MLB"),
-        // backgroundColor: Colors.brown,
+        title: Text("MLB Main"),
+         backgroundColor: Colors.brown,
       ),
       body: Padding(
         padding: const EdgeInsets.all(16.0),

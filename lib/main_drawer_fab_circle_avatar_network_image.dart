@@ -5,10 +5,10 @@ import 'package:http/http.dart' as http;
 void main() => runApp(MaterialApp(
       title: "Learning Buddy",
       home: Home(),
-      theme: ThemeData(
-          primarySwatch:
-              Colors.purple // it changes the status bar and top bar color
-          ),
+      // theme: ThemeData(
+      //     primarySwatch:
+      //         Colors.red // it changes the status bar and top bar color // not working on latest version
+      //     ),
     ));
 
 class Home extends StatefulWidget {
@@ -31,7 +31,7 @@ class _HomeState extends State<Home> {
   }
 
   getData() async {
-    var res = await http.get(url);
+    var res = await http.get(Uri.parse(url));
     print(res.body);
   }
 
@@ -41,7 +41,7 @@ class _HomeState extends State<Home> {
       backgroundColor: Colors.grey[200],
       appBar: AppBar(
         title: Text("MLB"),
-        // backgroundColor: Colors.brown,
+        backgroundColor: Colors.red,
       ),
       body: Padding(
         padding: const EdgeInsets.all(16.0),
