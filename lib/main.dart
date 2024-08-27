@@ -1,5 +1,6 @@
 import 'dart:convert';
 
+import 'package:dio/dio.dart';
 import 'package:flutter/material.dart';
 import 'package:http/http.dart' as http;
 import 'package:my_learning_buddy/drawer.dart';
@@ -32,6 +33,8 @@ class _HomeState extends State<Home> {
   var url = "https://jsonplaceholder.typicode.com/photos";
   var data;
 
+  Dio dio = Dio();
+
   @override
   void initState() {
     super.initState();
@@ -39,9 +42,9 @@ class _HomeState extends State<Home> {
   }
 
   getData() async {
-    var res = await http.get(Uri.parse(url));
+    var res = await dio.get(url);
     // print(res.body);
-    data = jsonDecode(res.body);
+    data = res.data;
     print(data);
     setState(() {});
   }
