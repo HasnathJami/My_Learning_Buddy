@@ -42,12 +42,26 @@ class _HomeState extends State<Home> {
   }
 
   getData() async {
-    var res = await dio.get(url);
-    // print(res.body);
-    data = res.data;
-    print(data);
-    setState(() {});
+    try {
+      var response = await dio.get(url);
+      data = response.data;
+      setState(() {});
+    } on DioError catch (e) {
+      if (e.response != null) {
+        // The server responded with an error code and data
+        print("Server error: ${e.response?.statusCode}");
+        print("Data: ${e.response?.data}");
+      } else {
+        // Something happened in setting up or sending the request that triggered an Error
+        print("Error sending request: ${e.message}");
+      }
+    } catch (e) {
+      // Handle any other type of error
+      print("Unexpected error: $e");
+    }
   }
+
+
 
   @override
   Widget build(BuildContext context) {
