@@ -1,24 +1,28 @@
-import 'dart:convert';
-
 import 'package:dio/dio.dart';
 import 'package:flutter/material.dart';
-import 'package:http/http.dart' as http;
 import 'package:my_learning_buddy/drawer.dart';
+import 'package:my_learning_buddy/utils/PreferencesUtil.dart';
 
 import 'login_page.dart';
 
-void main() => runApp(MaterialApp(
-      title: "Learning Buddy",
-      home: LoginPage(),
-      routes: {
-        "/login": (context) => LoginPage(),
-        "/home": (context) => Home()
-      },
-      // theme: ThemeData(
-      //     primarySwatch:
-      //     Colors.purple // it changes the status bar and top bar color
-      // ),
-    ));
+Future main() async {
+  WidgetsFlutterBinding.ensureInitialized();
+  // PreferencesUtil.preferences = await SharedPreferences.getInstance();
+  await PreferencesUtil.initPrefs();
+
+  runApp(MaterialApp(
+    debugShowCheckedModeBanner: false,
+    title: "Learning Buddy",
+    home: PreferencesUtil.preferences.getBool("loggedIn") == true
+        ? Home()
+        : LoginPage(),
+    routes: {"/login": (context) => LoginPage(), "/home": (context) => Home()},
+    // theme: ThemeData(
+    //     primarySwatch:
+    //     Colors.purple // it changes the status bar and top bar color
+    // ),
+  ));
+}
 
 class Home extends StatefulWidget {
   const Home({super.key});
@@ -61,8 +65,6 @@ class _HomeState extends State<Home> {
     }
   }
 
-
-
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -70,6 +72,15 @@ class _HomeState extends State<Home> {
       appBar: AppBar(
         title: Text("MLB Main"),
         backgroundColor: Colors.brown,
+        actions: [
+          IconButton(
+            icon: Icon(Icons.exit_to_app),
+            onPressed: () {
+              PreferencesUtil.preferences.setBool("loggedIn", false);
+              Navigator.pushReplacementNamed(context, "/login");
+            },
+          )
+        ],
       ),
       body: Padding(
         padding: const EdgeInsets.all(16.0),

@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:my_learning_buddy/main.dart';
+import 'package:my_learning_buddy/utils/PreferencesUtil.dart';
 
 class LoginPage extends StatefulWidget {
   const LoginPage({super.key});
@@ -65,7 +66,9 @@ class _LoginPageState extends State<LoginPage> {
                                 //     context,
                                 //     MaterialPageRoute(
                                 //         builder: (context) => Home()));
-                                Navigator.pushNamed(context, "/home");
+                                PreferencesUtil.preferences.setBool("loggedIn", true);
+                                // Navigator.pushNamed(context, "/home");
+                                Navigator.pushReplacementNamed(context, "/home");
                               },
                               child: Text("Sign In"),
                               style: FilledButton.styleFrom(
