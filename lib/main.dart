@@ -1,16 +1,17 @@
-import 'package:flutter/material.dart';
-import 'package:my_learning_buddy/drawer.dart';
-import 'package:http/http.dart' as http;
 import 'dart:convert';
 
+import 'package:flutter/material.dart';
+import 'package:http/http.dart' as http;
+import 'package:my_learning_buddy/drawer.dart';
+
 void main() => runApp(MaterialApp(
-  title: "Learning Buddy",
-  home: Home(),
-  // theme: ThemeData(
-  //     primarySwatch:
-  //     Colors.purple // it changes the status bar and top bar color
-  // ),
-));
+      title: "Learning Buddy",
+      home: Home(),
+      // theme: ThemeData(
+      //     primarySwatch:
+      //     Colors.purple // it changes the status bar and top bar color
+      // ),
+    ));
 
 class Home extends StatefulWidget {
   const Home({super.key});
@@ -35,9 +36,8 @@ class _HomeState extends State<Home> {
     var res = await http.get(Uri.parse(url));
     // print(res.body);
     data = jsonDecode(res.body);
-     print(data);
-    setState(() {
-    });
+    print(data);
+    setState(() {});
   }
 
   @override
@@ -46,28 +46,32 @@ class _HomeState extends State<Home> {
       backgroundColor: Colors.grey[200],
       appBar: AppBar(
         title: Text("MLB Main"),
-         backgroundColor: Colors.brown,
+        backgroundColor: Colors.brown,
       ),
       body: Padding(
         padding: const EdgeInsets.all(16.0),
         child: data != null
             ? ListView.builder(
-              // gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(crossAxisCount: 2),
-              itemBuilder: (context, index) {
-                return Padding(
-                  padding: const EdgeInsets.all(16.0),
-                  child: ListTile(
-                    title: Text(data[index]["title"]),
-                    subtitle: Text("ID: ${data[index]["id"]}"),
-                    leading: Image.network(data[index]["thumbnailUrl"]),
-                  ),
-                );
-              },
-              itemCount: data.length
-            )
+                // gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(crossAxisCount: 2),
+                itemBuilder: (context, index) {
+                  return Padding(
+                    padding: const EdgeInsets.all(16.0),
+                    child: ListTile(
+                      title: Text(data[index]["title"]),
+                      subtitle: Text("ID: ${data[index]["id"]}"),
+                      leading: Image.network(
+                        "https://images.unsplash.com/photo-1721332153521-120cb0cd02d9?q=80&w=1935&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDF8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D",
+                        height: 100,
+                        width: 200,
+                        fit: BoxFit.cover,
+                      ),
+                    ),
+                  );
+                },
+                itemCount: data.length)
             : Center(
-          child: CircularProgressIndicator(),
-        ),
+                child: CircularProgressIndicator(),
+              ),
       ),
       // floatingActionButtonLocation: FloatingActionButtonLocation.centerDocked,
       floatingActionButton: FloatingActionButton(
